@@ -5,6 +5,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in) ;
         InstaPayAccount account = new InstaPayAccount() ;
         String command ;
+        System.out.println("Nourhan");
         System.out.println("sign up / sign in");
         command = scanner.nextLine().toLowerCase();
         if (command == "sign up")
