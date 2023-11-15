@@ -1,17 +1,17 @@
 import java.util.Scanner;
 
 public class User {
-    private BankValidation validation1 = new BankValidation();
-    private WalletValidation validation2 = new WalletValidation();
-    private Scanner scanner = new Scanner(System.in);
-    private String type;
-    private String userName;
-    private String password;
-    private String bankAccount;
-    private String phoneNumber;
-    private String walletType;
-    private float balance;
-
+    BankValidation validation1 = new BankValidation() ;
+    WalletValidation validation2 = new WalletValidation() ;
+    Scanner scanner = new Scanner(System.in) ;
+    String type ;
+    int accountype ;
+    String userName ;
+    String password ;
+    String bankAccount ;
+    String phoneNumber;
+    String walletType;
+    float balance ;
     public BankValidation getValidation1() {
         return validation1;
     }
@@ -81,45 +81,53 @@ public class User {
     }
 
     public void setWalletType(String walletType) {
-        this.walletType = walletType;
+        }
+    public void setBalance(float balance) {
+        this.balance = balance;
+    }
+    public float getBalance() {
+        return balance;
     }
 
-    public User(String userName, String password, String bankAccount, String phoneNumber, String type) {
+    public void setUser(String userName, String password, String bankAccount, String phoneNumber ,String type) {
         this.userName = userName;
         this.password = password;
         this.bankAccount = bankAccount;
         this.phoneNumber = phoneNumber;
-        if ("bankAccount".equals(type)) {
-            InstaPayAccount account = new InstaPayAccount(bankAccount, phoneNumber, type);
-            account.addUser(this);
-        } else if ("wallet".equals(type)) {
-            InstaPayAccount account = new InstaPayAccount(null, phoneNumber, type);
-            account.addUser(this);
-        }
     }
 
 
-    public boolean register() {
-        System.out.println("Enter your bank account number: ");
-        bankAccount = scanner.nextLine().toLowerCase();
+    boolean Register() {
         System.out.println("Enter your phone number: ");
         phoneNumber = scanner.nextLine().toLowerCase();
-        System.out.println("Enter either bankAccount or wallet: ");
-        type = scanner.nextLine().toLowerCase();
+        System.out.println("Enter either 1 for bankAccount or 2 for wallet ");
+        accountype = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
 
-        if ("wallet".equals(type)) {
-            System.out.println("What is the type of your wallet?");
+        if (accountype == 2) {
+            type = "wallet";
+            System.out.println("What is the type of your wallet? vodafone / cib / fawry");
             walletType = scanner.nextLine().toLowerCase();
-        }
+            boolean isVerified = validation2.verificationWallet(walletType, phoneNumber);
 
-        System.out.println("Enter your balance: ");
-        balance = scanner.nextFloat();
+            if (isVerified) {
+                addUserToInstaPay(null, phoneNumber, type);
+                return true;
+            }
+        } else {
+            type = "bankaccount";
+            System.out.println("Enter your bank account number: ");
+            bankAccount = scanner.nextLine();
+            System.out.println("Enter your balance ");
+            balance = scanner.nextFloat();
+            scanner.nextLine(); // Consume the newline character
 
-        boolean isVerified = validation1.verificationOfBank(bankAccount, phoneNumber);
+            boolean isVerified = validation1.verificationOfBank(bankAccount, phoneNumber);
 
-        if (isVerified) {
-            addUserToInstaPay(bankAccount, phoneNumber, type);
-            return true;
+            if (isVerified) {
+                addUserToInstaPay(bankAccount, phoneNumber, type);
+                return true;
+            }
         }
 
         return false;
@@ -127,24 +135,9 @@ public class User {
 
     private void addUserToInstaPay(String bankAccount, String phoneNumber, String type) {
         InstaPayAccount account = new InstaPayAccount(bankAccount, phoneNumber, type);
-        account.addUser(bankAccount, phoneNumber, type, userName, password, balance);
+        account.addUser(bankAccount, phoneNumber, type);
     }
-
-    public void setBalance(float balance) {
-        this.balance = balance;
-    }
-
-    public float getBalance() {
-        return balance;
-    }
-
-    public void transferToWallet(InstaPayAccount instaPayAccount, String recipientPhoneNumber, float amount) {
-        instaPayAccount.transferToWallet(this, recipientPhoneNumber, amount);
-    }
-
-    public void transferToInstaPayAccount(InstaPayAccount instaPayAccount, String recipientUsername, float amount) {
-        instaPayAccount.transferToInstaPayAccount(this, recipientUsername, amount);
-    }
-
 
 }
+
+
