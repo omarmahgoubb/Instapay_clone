@@ -1,11 +1,10 @@
-import java.util.Random;
-import java.util.Scanner;
 
-public class BankValidation extends Validation
-{
+
+
+public class BankValidation extends Validation{
     private String[] bankNumber = {"99999","11111","22222"};
     private String[] bankMobileNumber = {"01030","01250","01560"};
-    private int[] otpNumbers = {123, 456, 789, 888, 111 , 222 , 333 , 444 } ;
+
 
     public boolean verifyBankMobileNumber (String num)
     {
@@ -37,35 +36,7 @@ public class BankValidation extends Validation
         return false ;
 
     }
-    public boolean otpVerification()
-    {
 
-        int randomIndex = new Random().nextInt(otpNumbers.length);
-
-        int randomNum = otpNumbers[randomIndex];
-        System.out.println("OTP number is : " + randomNum);
-
-        Scanner scanner = new Scanner(System.in);
-        int testnumber;
-        System.out.println("Please enter the otp number");
-        testnumber =  scanner.nextInt();
-        scanner.close();
-
-        System.out.println("OTP number is : " + randomNum + " you entered number : " + testnumber );
-
-
-         if (testnumber == randomNum)
-         {
-             System.out.println("OTP verified Successfully ");
-             return true;
-         }
-         else
-         {
-             System.out.println("error in otp verification !!");
-             return false;
-         }
-        //    System.out.println("done");
-    }
 
 
 
