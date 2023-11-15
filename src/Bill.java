@@ -1,4 +1,5 @@
-abstract class Bill {
+abstract class Bill
+{
     private String billType;
     public Bill(String billType)
     {

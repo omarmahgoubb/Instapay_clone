@@ -13,6 +13,16 @@ public class User {
     String walletType;
     float balance ;
 
+    User(){};
+    public User(String userName, String password, String bankAccount, String phoneNumber, String type, float balance) {
+        this.userName = userName;
+        this.password = password;
+        this.bankAccount = bankAccount;
+        this.phoneNumber = phoneNumber;
+        this.type = type;
+        this.balance = balance;
+    }
+
 
     public String getUserName() {
         return userName;
@@ -32,6 +42,16 @@ public class User {
         return balance;
     }
 
+    public void deductFromBalance(double amount) {
+        balance -= amount;
+    }
+
+    public boolean hasSufficientBalance(double amount) {
+        return balance >= amount;
+    }
+
+
+
     public void setUser(String userName, String password, String bankAccount, String phoneNumber ,String type) {
         this.userName = userName;
         this.password = password;
@@ -45,7 +65,7 @@ public class User {
         phoneNumber = scanner.nextLine().toLowerCase();
         System.out.println("Enter either 1 for bankAccount or 2 for wallet ");
         accountype = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
+        scanner.nextLine();
 
         if (accountype == 2) {
             type = "wallet";
@@ -63,7 +83,7 @@ public class User {
             bankAccount = scanner.nextLine();
             System.out.println("Enter your balance ");
             balance = scanner.nextFloat();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine();
 
             boolean isVerified = validation1.verificationOfBank(bankAccount, phoneNumber);
 

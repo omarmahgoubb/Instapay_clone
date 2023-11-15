@@ -14,23 +14,6 @@ public class Main {
             {
                 user.Register();
 
-//
-//            if (user.Register()) {
-//                scanner.nextLine();
-//                System.out.println("sign in to your account");
-//                System.out.println("enter your username ");
-//                String username = scanner.nextLine();
-//                System.out.println("enter your password ");
-//                String password = scanner.nextLine();
-//                user = instaPayAccount.login(username, password);
-//                String recivername;
-//                float amount;
-//                scanner.nextLine();
-//                System.out.println("enter the reciever name");
-//                recivername = scanner.nextLine();
-//                System.out.println("enter the amount ");
-//                amount = scanner.nextFloat();
-//                instaPayAccount.transfer(user, recivername, amount);
             }
          else if (command == 2)
          {
@@ -45,14 +28,14 @@ public class Main {
                 {
                     case 1:
                         instaPayAccount.login(username, password);
-                        String recivername;
+                        String receivername;
                         float amount;
                         scanner.nextLine();
                         System.out.println("enter the reciever name");
-                        recivername = scanner.nextLine();
+                        receivername = scanner.nextLine();
                         System.out.println("enter the amount ");
                         amount = scanner.nextFloat();
-                        instaPayAccount.transfer(user, recivername, amount);
+                        instaPayAccount.transfer(user, receivername, amount);
                         break;
                     case 2:
                         instaPayAccount.login(username, password);
@@ -67,6 +50,7 @@ public class Main {
                         break;
                     case 3:
                         instaPayAccount.inquireBalance();
+                    
 
                 }
 
@@ -76,7 +60,5 @@ public class Main {
                 flag = false;
             }
         }
-
-
     }
 }

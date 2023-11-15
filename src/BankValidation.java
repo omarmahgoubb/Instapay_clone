@@ -1,6 +1,4 @@
 
-
-
 public class BankValidation extends Validation{
     private String[] bankNumber = {"99999","11111","22222"};
     private String[] bankMobileNumber = {"01030","01250","01560"};

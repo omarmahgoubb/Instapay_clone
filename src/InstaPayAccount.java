@@ -6,11 +6,9 @@ public class InstaPayAccount {
     public Scanner scanner = new Scanner(System.in);
     public static ArrayList<User> users = new ArrayList<>();
 
-    // Private constructor to prevent direct instantiation
     private InstaPayAccount() {
     }
 
-    // Static method to get the singleton instance
     public static InstaPayAccount getInstance() {
         if (instance == null) {
             instance = new InstaPayAccount();
@@ -95,25 +93,6 @@ public class InstaPayAccount {
     }
 
 
-//    public User login(String username, String password) {
-//        for (User user : users) {
-//            if (user.userName != null && user.password != null) {
-//                if (user.userName.equals(username) && user.password.equals(password)) {
-//                    System.out.println("Login successful!");
-//                    System.out.println("Username: " + user.userName);
-//                    System.out.println("Balance: $" + user.balance);
-//                    System.out.println("Account Type: " + user.type);
-//                    return user;
-//                }
-//            } else {
-//                System.out.println("Invalid user credentials");
-//            }
-//        }
-//
-//        System.out.println("Wrong Email or Password");
-//        return null;
-//    }
-
     private TransferStrategy transferStrategy;
 
     public void setTransferStrategy(TransferStrategy transferStrategy) {
@@ -128,11 +107,7 @@ public class InstaPayAccount {
         }
     }
 
-    //******************************
-
-
-
-    private User loggedInUser; // Track the currently logged-in user
+    private User loggedInUser;
 
     public void login(String username, String password) {
         for (User user : users) {
