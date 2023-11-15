@@ -1,7 +1,8 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class BankValidation extends Validation{
+public class BankValidation extends Validation
+{
     private String[] bankNumber = {"99999","11111","22222"};
     private String[] bankMobileNumber = {"01030","01250","01560"};
     private int[] otpNumbers = {123, 456, 789, 888, 111 , 222 , 333 , 444 } ;

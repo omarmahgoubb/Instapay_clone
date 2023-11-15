@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class InstaPayAccount {
+public class InstaPayAccount
+{
     Scanner scanner = new Scanner(System.in) ;
     ArrayList <User> users = new ArrayList<>();
      float Balance ;
@@ -12,7 +13,8 @@ public class InstaPayAccount {
             System.out.println("Enter a distinct username: ");
             String userName = scanner.nextLine();
             for (User user : users) {
-                if (user.UserName==userName) {
+                if (user.UserName.equals(userName))
+                {
                     System.out.println("this username already exists , please enter another a distinct username");
                 }
 

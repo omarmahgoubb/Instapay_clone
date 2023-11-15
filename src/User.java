@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
-public class User {
+public class User
+{
     private final String userName;
     private final String password;
     Scanner scanner = new Scanner(System.in) ;
