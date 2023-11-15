@@ -1,9 +1,13 @@
 public class UserAccount {
+    private boolean hasBankAccount;
+    private boolean hasWalletAccount;
     private String accountNumber;
     private double balance;
-    public  UserAccount(String accountNumber, double balance)
+    public  UserAccount(String accountNumber,boolean hasBankAccount,boolean hasWalletAccount, double balance)
     {
         this.accountNumber = accountNumber;
+        this.hasBankAccount = hasBankAccount;
+        this.hasWalletAccount = hasBankAccount;
         this.balance = balance;
     }
     public String getAccountNumber()
@@ -18,6 +22,18 @@ public class UserAccount {
     {
         balance -= amount;
     }
+    public boolean hasSufficientBalance(double amount)
+    {
+        return balance >= amount;
+    }
+
+    public boolean HasBankAccount()
+    {
+        return hasBankAccount;
+    }
+
+    public boolean HasWalletAccount()
+    {
+        return hasWalletAccount;
+    }
 }
-
-

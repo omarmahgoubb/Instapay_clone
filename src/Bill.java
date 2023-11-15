@@ -1,22 +1,15 @@
-abstract class Bill
-{
-    public String billType;
-    public double receipt;
-    public Bill(String billType,double receipt)
+abstract class Bill {
+    private String billType;
+    public Bill(String billType)
     {
         this.billType = billType;
-        this.receipt = receipt;
     }
     public String getBillType()
     {
         return billType;
     }
-    public double getReceipt()
-    {
-        return receipt;
-    }
+    public abstract int getReceiptAmount();
+
     public abstract void deductBillFromAccount(UserAccount userAccount);
 }
-
-
 
