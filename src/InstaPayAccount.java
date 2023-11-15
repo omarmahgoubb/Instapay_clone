@@ -6,12 +6,14 @@ public class InstaPayAccount {
     public Scanner scanner = new Scanner(System.in);
     public static ArrayList<User> users = new ArrayList<>();
 
-    // Private constructor to prevent direct instantiation
-    private InstaPayAccount() {
+    
+    private InstaPayAccount() // Private constructor 
+    { 
     }
 
-    // Static method to get the singleton instance
-    public static InstaPayAccount getInstance() {
+    
+    public static InstaPayAccount getInstance() // Static method  
+    {
         if (instance == null) {
             instance = new InstaPayAccount();
         }
@@ -114,18 +116,8 @@ public class InstaPayAccount {
         return null;
     }
 
-    private TransferStrategy transferStrategy;
+     // private TransferStrategy transferStrategy;
+    
 
-    public void setTransferStrategy(TransferStrategy transferStrategy) {
-        this.transferStrategy = transferStrategy;
-    }
-
-    public void transfer(User sender, String recipient, float amount) {
-        if (transferStrategy != null) {
-            transferStrategy.transfer(sender, recipient, amount);
-        } else {
-            System.out.println("Transfer strategy not set.");
-        }
-    }
-
+    
 }
