@@ -1,17 +1,16 @@
 import java.util.Scanner;
 
-public class User
-{
-    private final String userName;
-    private final String password;
+public class User {
+    BankValidation validation1 = new BankValidation() ;
+    WalletValidation validation2 = new WalletValidation() ;
     Scanner scanner = new Scanner(System.in) ;
-    String phone ;
     String type ;
-    String UserName ;
-    String Password ;
+    String userName ;
+    String password ;
     String bankAccount ;
-    private final String phoneNumber;
-    float Balance ;
+    String phoneNumber;
+    String walletType;
+    float balance ;
 
     public User(String userName, String password, String bankAccount, String phoneNumber ,String type) {
         this.userName = userName;
@@ -27,20 +26,38 @@ public class User
         System.out.println("Enter your bank account number: ");
         bankAccount = scanner.nextLine().toLowerCase();
         System.out.println("Enter your phone number: ");
-        phone = scanner.nextLine().toLowerCase();
+        phoneNumber = scanner.nextLine().toLowerCase();
         System.out.println("Enter either bankAccount or wallet: ");
         type = scanner.nextLine().toLowerCase();
-        /*
-        bool isverfied = verify(bankAccount,phoneNumber,type);
-        if(isverfied)
+        if (type == "wallet")
         {
-        private void addUser(String bankAccount, String phoneNumber) {
-         InstaPayAccount account = new InstaPayAccount(bankAccount , phone , type) ;
-         account.adduser(bankAccount , phoneNumber , type );
-    }
-        */
+            System.out.println("what is the type of your wallet ");
+            walletType = scanner.nextLine().toLowerCase() ;
+
+        }
+        System.out.println("Enter your balance ");
+        balance = scanner.nextFloat();
+
+        boolean isVerified = validation1.verificationOfBank(bankAccount, phoneNumber);
+
+        if (isVerified) {
+            addUserToInstaPay(bankAccount, phoneNumber, type);
+            return true;
+        }
+
         return true ;
+
     }
-
-
+    private void addUserToInstaPay(String bankAccount, String phoneNumber, String type) {
+        InstaPayAccount account = new InstaPayAccount(bankAccount, phoneNumber, type);
+        account.addUser(bankAccount, phoneNumber, type);
+    }
+    public void setBalance(float balance) {
+        this.balance = balance;
+    }
+    public float getBalance() {
+        return balance;
+    }
 }
+
+
