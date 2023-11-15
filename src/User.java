@@ -13,78 +13,17 @@ public class User {
     String walletType;
     float balance ;
 
-    public BankValidation getValidation1() {
-        return validation1;
-    }
-
-    public void setValidation1(BankValidation validation1) {
-        this.validation1 = validation1;
-    }
-
-    public WalletValidation getValidation2() {
-        return validation2;
-    }
-
-    public void setValidation2(WalletValidation validation2) {
-        this.validation2 = validation2;
-    }
-
-    public Scanner getScanner() {
-        return scanner;
-    }
-
-    public void setScanner(Scanner scanner) {
-        this.scanner = scanner;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public String getUserName() {
         return userName;
     }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getBankAccount() {
         return bankAccount;
-    }
-
-    public void setBankAccount(String bankAccount) {
-        this.bankAccount = bankAccount;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getWalletType() {
-        return walletType;
-    }
-
-    public void setWalletType(String walletType) {
-        this.walletType = walletType;
-    }
-
 
     public void setBalance(float balance) {
         this.balance = balance;
@@ -119,7 +58,7 @@ public class User {
                 return true;
             }
         } else {
-            type = "bankaccount";
+            type = "bankAccount";
             System.out.println("Enter your bank account number: ");
             bankAccount = scanner.nextLine();
             System.out.println("Enter your balance ");
@@ -138,7 +77,7 @@ public class User {
     }
 
     private void addUserToInstaPay(String bankAccount, String phoneNumber, String type, float balance) {
-        InstaPayAccount account = new InstaPayAccount(bankAccount, phoneNumber, type);
+        InstaPayAccount account = InstaPayAccount.getInstance();
         account.addUser(bankAccount, phoneNumber, type , this.balance);
     }
 

@@ -2,14 +2,28 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InstaPayAccount {
-    private Scanner scanner = new Scanner(System.in);
-    private ArrayList<User> users = new ArrayList<>();
+    private static InstaPayAccount instance;
+    public Scanner scanner = new Scanner(System.in);
+    public static ArrayList<User> users = new ArrayList<>();
+
+    // Private constructor to prevent direct instantiation
+    private InstaPayAccount() {
+    }
+
+    // Static method to get the singleton instance
+    public static InstaPayAccount getInstance() {
+        if (instance == null) {
+            instance = new InstaPayAccount();
+        }
+        return instance;
+    }
+
 
     public InstaPayAccount(String bankAccount, String phoneNumber, String type) {
     }
 
 
-    public void addUser(String bankAccount, String phoneNumber, String type, float balance) {
+    public void addUser(String bankAccount, String phoneNumber, String type , float balance) {
         if ("bankAccount".equals(type)) {
             if (!userExists(bankAccount, phoneNumber)) {
                 System.out.println("Enter a distinct username: ");
@@ -17,7 +31,8 @@ public class InstaPayAccount {
                 if (!isUsernameTaken(userName)) {
                     System.out.println("Enter a complex password: ");
                     String password = scanner.nextLine();
-                    users.add(new BankUser(userName, password, bankAccount, phoneNumber, type, balance));
+                    User user1 = new BankUser(userName, password, bankAccount, phoneNumber, type, balance) ;
+                    users.add(user1);
                     System.out.println("User added successfully!");
                 } else {
                     System.out.println("This username already exists. Please enter another distinct username.");
@@ -81,7 +96,7 @@ public class InstaPayAccount {
 
 
     public void transferToWallet(User sender, String recipientPhoneNumber, float amount) {
-        if ("wallet".equals(sender.getType())) {
+        if ("wallet".equals(sender.type)) {
             for (User user : users) {
                 if (user.getPhoneNumber().equals(recipientPhoneNumber)) {
                     sender.setBalance(sender.getBalance() - amount);
@@ -115,18 +130,23 @@ public class InstaPayAccount {
         }
     }
 
-    public void login(String username, String password) {
+    public User login(String username, String password) {
         for (User user : users) {
-            if (user.userName.equals(username) && user.password.equals(password)) {
-                System.out.println(user.userName);
-                System.out.println(user.balance);
-                System.out.println(user.type);
-            }
-            else
-            {
-                System.out.println("Wrong Email or Password");
+            if (user.userName != null && user.password != null) {
+                if (user.userName.equals(username) && user.password.equals(password)) {
+                    System.out.println("Login successful!");
+                    System.out.println("Username: " + user.userName);
+                    System.out.println("Balance: $" + user.balance);
+                    System.out.println("Account Type: " + user.type);
+                    return user;
+                }
+            } else {
+                System.out.println("Invalid user credentials");
             }
         }
 
+        System.out.println("Wrong Email or Password");
+        return null;
     }
+
 }
