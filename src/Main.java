@@ -10,33 +10,69 @@ public class Main {
         while (flag) {
             System.out.println("enter 1 for sign up  / enter  2 for signing in / 3 for exit");
             command = scanner.nextInt();
-            if (command == 1) {
+            if (command == 1)
+            {
+                user.Register();
 
-                if (user.Register()) {
-                    scanner.nextLine();
-                    System.out.println("sign in to your account");
-                    System.out.println("enter your username ");
-                    String username = scanner.nextLine();
-                    System.out.println("enter your password ");
-                    String password = scanner.nextLine();
-                    user = instaPayAccount.login(username, password);
-                    String recivername;
-                    float amount;
-                    scanner.nextLine();
-                    System.out.println("enter the reciever name");
-                    recivername = scanner.nextLine();
-                    System.out.println("enter the amount ");
-                    amount = scanner.nextFloat();
-                    instaPayAccount.transfer(user, recivername, amount);
-                }
-            } else if (command == 2) {
+//
+//            if (user.Register()) {
+//                scanner.nextLine();
+//                System.out.println("sign in to your account");
+//                System.out.println("enter your username ");
+//                String username = scanner.nextLine();
+//                System.out.println("enter your password ");
+//                String password = scanner.nextLine();
+//                user = instaPayAccount.login(username, password);
+//                String recivername;
+//                float amount;
+//                scanner.nextLine();
+//                System.out.println("enter the reciever name");
+//                recivername = scanner.nextLine();
+//                System.out.println("enter the amount ");
+//                amount = scanner.nextFloat();
+//                instaPayAccount.transfer(user, recivername, amount);
+            }
+         else if (command == 2)
+         {
                 System.out.println("enter your username ");
                 String username = scanner.nextLine();
                 System.out.println("enter your password ");
                 String password = scanner.nextLine();
                 instaPayAccount.login(username, password);
+                int command2=0;
+             System.out.println("1:Transfer to Wallet , 2:Transfer to Another instapay account , 3:Inquire about his balance");
+                switch (command2)
+                {
+                    case 1:
+                        instaPayAccount.login(username, password);
+                        String recivername;
+                        float amount;
+                        scanner.nextLine();
+                        System.out.println("enter the reciever name");
+                        recivername = scanner.nextLine();
+                        System.out.println("enter the amount ");
+                        amount = scanner.nextFloat();
+                        instaPayAccount.transfer(user, recivername, amount);
+                        break;
+                    case 2:
+                        instaPayAccount.login(username, password);
+                        String receiver="";
+                        float Amount=0;
+                        scanner.nextLine();
+                        System.out.println("enter the reciever ");
+                        receiver= scanner.nextLine();
+                        System.out.println("enter the amount ");
+                        Amount = scanner.nextFloat();
+                        instaPayAccount.transfer(user, receiver, Amount);
+                        break;
+                    case 3:
+                        instaPayAccount.inquireBalance();
 
-            } else if (command == 3) {
+                }
+
+
+            } else if (command == 3)
+            {
                 flag = false;
             }
         }
