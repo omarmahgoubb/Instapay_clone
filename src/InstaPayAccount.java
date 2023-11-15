@@ -2,74 +2,130 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InstaPayAccount {
-    Scanner scanner = new Scanner(System.in) ;
-    ArrayList <User> users = new ArrayList<>();
-    float Balance ;
+    private Scanner scanner = new Scanner(System.in);
+    private ArrayList<User> users = new ArrayList<>();
 
-    public InstaPayAccount(String bankAccount, String phoneNumber, String type) {
-    }
 
-    public void addUser(String bankAccount, String phoneNumber , String type) {
-        if (type == "bankAccount") {
+    public void addUser(String bankAccount, String phoneNumber, String type, String userName, String password, float balance) {
+        if ("bankAccount".equals(type)) {
             if (!userExists(bankAccount, phoneNumber)) {
                 System.out.println("Enter a distinct username: ");
-                String userName = scanner.nextLine();
-                for (User user : users) {
-                    if (user.userName == userName) {
-                        System.out.println("this username already exists , please enter another a distinct username");
-                    }
-
+                userName = scanner.nextLine();
+                if (!isUsernameTaken(userName)) {
+                    System.out.println("Enter a complex password: ");
+                    password = scanner.nextLine();
+                    users.add(new BankUser(userName, password, bankAccount, phoneNumber, type, balance));
+                    System.out.println("User added successfully!");
+                } else {
+                    System.out.println("This username already exists. Please enter another distinct username.");
                 }
-
-                System.out.println("Enter a complex password: ");
-                String password = scanner.nextLine();
-                users.add(new BankUser(userName, password, bankAccount, phoneNumber, type));
-
-                System.out.println("User added successfully!");
             } else {
                 System.out.println("User already exists.");
             }
-        }
-        else if (type == "wallet")
-        {
+        } else if ("wallet".equals(type)) {
             if (!userExists(phoneNumber)) {
                 System.out.println("Enter a distinct username: ");
-                String userName = scanner.nextLine();
-                for (User user : users) {
-                    if (user.userName == userName) {
-                        System.out.println("this username already exists , please enter another a distinct username");
-                    }
-
+                userName = scanner.nextLine();
+                if (!isUsernameTaken(userName)) {
+                    System.out.println("Enter a complex password: ");
+                    password = scanner.nextLine();
+                    users.add(new WalletUser(userName, password, bankAccount, phoneNumber, type, balance));
+                    System.out.println("User added successfully!");
+                } else {
+                    System.out.println("This username already exists. Please enter another distinct username.");
                 }
-
-                System.out.println("Enter a complex password: ");
-                String password = scanner.nextLine();
-                users.add(new WalletUser(userName, password, bankAccount, phoneNumber, type));
-
-                System.out.println("User added successfully!");
             } else {
                 System.out.println("User already exists.");
             }
         }
     }
-    private boolean userExists(String BankAccount, String phone) {
+
+    private boolean userExists(String bankAccount, String phone) {
         for (User user : users) {
-            if (user.bankAccount.equals(BankAccount) && user.phoneNumber.equals(phone)) {
+            if (user.getBankAccount().equals(bankAccount) && user.getPhoneNumber().equals(phone)) {
                 return true;
             }
         }
         return false;
     }
+
     private boolean userExists(String phone) {
         for (User user : users) {
-            if (user.phoneNumber.equals(phone)) {
+            if (user.getPhoneNumber().equals(phone)) {
                 return true;
             }
         }
         return false;
     }
+
+    private boolean isUsernameTaken(String userName) {
+        for (User user : users) {
+            if (user.getUserName().equals(userName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    public InstaPayAccount(String bankAccount, String phoneNumber, String type)
+    {
+    }
+
+    public void addUser(User user)
+    {
+        users.add(user);
+    }
+
+    public User getUserByUsername(String username) {
+        for (User user : users) {
+            if (user.getUserName().equals(username))
+            {
+                return user;
+            }
+        }
+        return null;
+    }
+
+
+    public void transferToWallet(User sender, String recipientPhoneNumber, float amount)
+    {
+        if ("wallet".equals(sender.getType())) {
+            for (User user : users) {
+                if (user.getPhoneNumber().equals(recipientPhoneNumber))
+                {
+                    sender.setBalance(sender.getBalance() - amount);
+                    System.out.println("Transferred $" + amount + " to Wallet: " + recipientPhoneNumber);
+                    System.out.println("Remaining balance: $" + sender.getBalance());
+                    return;
+                }
+            }
+            System.out.println("Recipient wallet not found.");
+        } else {
+            System.out.println("Transferring to a wallet is only valid for users registered with a wallet.");
+        }
+    }
+
+    public void transferToInstaPayAccount(User sender, String recipientUsername, float amount)
+    {
+        User recipient = getUserByUsername(recipientUsername);
+
+        if (recipient != null)
+        {
+            if (sender.getBalance() >= amount)
+            {
+                sender.setBalance(sender.getBalance() - amount);
+                recipient.setBalance(recipient.getBalance() + amount);
+
+                System.out.println("Transferred $" + amount + " to InstaPay account: " + recipientUsername);
+                System.out.println("Remaining balance for " + sender.getUserName() + ": $" + sender.getBalance());
+                System.out.println("New balance for " + recipient.getUserName() + ": $" + recipient.getBalance());
+            } else {
+                System.out.println("Insufficient balance for the transfer.");
+            }
+        } else {
+            System.out.println("Recipient InstaPay account not found.");
+        }
+    }
 }
-
-
-
-
