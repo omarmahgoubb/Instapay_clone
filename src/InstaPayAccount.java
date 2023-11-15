@@ -5,15 +5,18 @@ public class InstaPayAccount {
     private Scanner scanner = new Scanner(System.in);
     private ArrayList<User> users = new ArrayList<>();
 
+    public InstaPayAccount(String bankAccount, String phoneNumber, String type) {
+    }
 
-    public void addUser(String bankAccount, String phoneNumber, String type, String userName, String password, float balance) {
+
+    public void addUser(String bankAccount, String phoneNumber, String type, float balance) {
         if ("bankAccount".equals(type)) {
             if (!userExists(bankAccount, phoneNumber)) {
                 System.out.println("Enter a distinct username: ");
-                userName = scanner.nextLine();
+                String userName = scanner.nextLine();
                 if (!isUsernameTaken(userName)) {
                     System.out.println("Enter a complex password: ");
-                    password = scanner.nextLine();
+                    String password = scanner.nextLine();
                     users.add(new BankUser(userName, password, bankAccount, phoneNumber, type, balance));
                     System.out.println("User added successfully!");
                 } else {
@@ -25,10 +28,10 @@ public class InstaPayAccount {
         } else if ("wallet".equals(type)) {
             if (!userExists(phoneNumber)) {
                 System.out.println("Enter a distinct username: ");
-                userName = scanner.nextLine();
+                String userName = scanner.nextLine();
                 if (!isUsernameTaken(userName)) {
                     System.out.println("Enter a complex password: ");
-                    password = scanner.nextLine();
+                    String password = scanner.nextLine();
                     users.add(new WalletUser(userName, password, bankAccount, phoneNumber, type, balance));
                     System.out.println("User added successfully!");
                 } else {
@@ -67,21 +70,9 @@ public class InstaPayAccount {
         return false;
     }
 
-
-
-    public InstaPayAccount(String bankAccount, String phoneNumber, String type)
-    {
-    }
-
-    public void addUser(User user)
-    {
-        users.add(user);
-    }
-
     public User getUserByUsername(String username) {
         for (User user : users) {
-            if (user.getUserName().equals(username))
-            {
+            if (user.getUserName().equals(username)) {
                 return user;
             }
         }
@@ -89,12 +80,10 @@ public class InstaPayAccount {
     }
 
 
-    public void transferToWallet(User sender, String recipientPhoneNumber, float amount)
-    {
+    public void transferToWallet(User sender, String recipientPhoneNumber, float amount) {
         if ("wallet".equals(sender.getType())) {
             for (User user : users) {
-                if (user.getPhoneNumber().equals(recipientPhoneNumber))
-                {
+                if (user.getPhoneNumber().equals(recipientPhoneNumber)) {
                     sender.setBalance(sender.getBalance() - amount);
                     System.out.println("Transferred $" + amount + " to Wallet: " + recipientPhoneNumber);
                     System.out.println("Remaining balance: $" + sender.getBalance());
@@ -107,14 +96,11 @@ public class InstaPayAccount {
         }
     }
 
-    public void transferToInstaPayAccount(User sender, String recipientUsername, float amount)
-    {
+    public void transferToInstaPayAccount(User sender, String recipientUsername, float amount) {
         User recipient = getUserByUsername(recipientUsername);
 
-        if (recipient != null)
-        {
-            if (sender.getBalance() >= amount)
-            {
+        if (recipient != null) {
+            if (sender.getBalance() >= amount) {
                 sender.setBalance(sender.getBalance() - amount);
                 recipient.setBalance(recipient.getBalance() + amount);
 
@@ -127,5 +113,20 @@ public class InstaPayAccount {
         } else {
             System.out.println("Recipient InstaPay account not found.");
         }
+    }
+
+    public void login(String username, String password) {
+        for (User user : users) {
+            if (user.userName.equals(username) && user.password.equals(password)) {
+                System.out.println(user.userName);
+                System.out.println(user.balance);
+                System.out.println(user.type);
+            }
+            else
+            {
+                System.out.println("Wrong Email or Password");
+            }
+        }
+
     }
 }

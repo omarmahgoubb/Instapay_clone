@@ -12,6 +12,7 @@ public class User {
     String phoneNumber;
     String walletType;
     float balance ;
+
     public BankValidation getValidation1() {
         return validation1;
     }
@@ -81,7 +82,10 @@ public class User {
     }
 
     public void setWalletType(String walletType) {
-        }
+        this.walletType = walletType;
+    }
+
+
     public void setBalance(float balance) {
         this.balance = balance;
     }
@@ -111,7 +115,7 @@ public class User {
             boolean isVerified = validation2.verificationWallet(walletType, phoneNumber);
 
             if (isVerified) {
-                addUserToInstaPay(null, phoneNumber, type);
+                addUserToInstaPay(null, phoneNumber, type , balance);
                 return true;
             }
         } else {
@@ -125,7 +129,7 @@ public class User {
             boolean isVerified = validation1.verificationOfBank(bankAccount, phoneNumber);
 
             if (isVerified) {
-                addUserToInstaPay(bankAccount, phoneNumber, type);
+                addUserToInstaPay(bankAccount, phoneNumber, type , balance);
                 return true;
             }
         }
@@ -133,9 +137,9 @@ public class User {
         return false;
     }
 
-    private void addUserToInstaPay(String bankAccount, String phoneNumber, String type) {
+    private void addUserToInstaPay(String bankAccount, String phoneNumber, String type, float balance) {
         InstaPayAccount account = new InstaPayAccount(bankAccount, phoneNumber, type);
-        account.addUser(bankAccount, phoneNumber, type);
+        account.addUser(bankAccount, phoneNumber, type , this.balance);
     }
 
 }
