@@ -1,28 +1,18 @@
-public class WalletTransferStrategy implements TransactionStrategy {
+public class WalletTransferStrategy implements TransferStrategy
+{
     @Override
-    public void transferToWallet(InstaPayAccount sourceUser, InstaPayAccount destinationUser, float amount) {
-        // Implement the logic for transferring to a wallet
-    }
+    public void transfer(User sender, String recipientPhoneNumber, float amount) {
 
-    @Override
-    public void transferToInstaPayAccount(InstaPayAccount sourceUser, InstaPayAccount destinationUser, float amount) {
-        // Implement the logic for transferring to an InstaPay account
-    }
-
-    @Override
-    public void transferToBankAccount(InstaPayAccount sourceUser, InstaPayAccount destinationUser, float amount) {
-        // Implement the logic for transferring to a bank account
-    }
-
-    @Override
-    public boolean checkTransferToBankAccount(InstaPayAccount sourceUser, float amount) {
-        // Implement the logic for checking if transfer to bank account is valid
-        return true; // Replace with actual logic
-    }
-
-    @Override
-    public boolean checkBalance(InstaPayAccount sourceUser, float amount) {
-        // Implement the logic for checking if the balance is sufficient
-        return true; // Replace with actual logic
-    }
-}
+            for (User user : InstaPayAccount.users)
+            {
+                if (user.getPhoneNumber().equals(recipientPhoneNumber))
+                {
+                    sender.setBalance(sender.getBalance() - amount);
+                    System.out.println("Transferred $" + amount + " to Wallet: " + recipientPhoneNumber);
+                    System.out.println("Remaining balance: $" + sender.getBalance());
+                    return;
+                }
+            }
+            System.out.println("Recipient wallet not found.");
+        }
+        }

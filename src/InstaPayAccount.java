@@ -23,7 +23,7 @@ public class InstaPayAccount {
     }
 
 
-    public void addUser(String bankAccount, String phoneNumber, String type, float balance) {
+    public void addUser(String bankAccount, String phoneNumber, String type , float balance) {
         if ("bankAccount".equals(type)) {
             if (!userExists(bankAccount, phoneNumber)) {
                 System.out.println("Enter a distinct username: ");
@@ -31,7 +31,7 @@ public class InstaPayAccount {
                 if (!isUsernameTaken(userName)) {
                     System.out.println("Enter a complex password: ");
                     String password = scanner.nextLine();
-                    User user1 = new BankUser(userName, password, bankAccount, phoneNumber, type, balance);
+                    User user1 = new BankUser(userName, password, bankAccount, phoneNumber, type, balance) ;
                     users.add(user1);
                     System.out.println("User added successfully!");
                 } else {
@@ -95,41 +95,6 @@ public class InstaPayAccount {
     }
 
 
-    public void transferToWallet(User sender, String recipientPhoneNumber, float amount) {
-        if ("wallet".equals(sender.type)) {
-            for (User user : users) {
-                if (user.getPhoneNumber().equals(recipientPhoneNumber)) {
-                    sender.setBalance(sender.getBalance() - amount);
-                    System.out.println("Transferred $" + amount + " to Wallet: " + recipientPhoneNumber);
-                    System.out.println("Remaining balance: $" + sender.getBalance());
-                    return;
-                }
-            }
-            System.out.println("Recipient wallet not found.");
-        } else {
-            System.out.println("Transferring to a wallet is only valid for users registered with a wallet.");
-        }
-    }
-
-    public void transferToInstaPayAccount(User sender, String recipientUsername, float amount) {
-        User recipient = getUserByUsername(recipientUsername);
-
-        if (recipient != null) {
-            if (sender.getBalance() >= amount) {
-                sender.setBalance(sender.getBalance() - amount);
-                recipient.setBalance(recipient.getBalance() + amount);
-
-                System.out.println("Transferred $" + amount + " to InstaPay account: " + recipientUsername);
-                System.out.println("Remaining balance for " + sender.getUserName() + ": $" + sender.getBalance());
-                System.out.println("New balance for " + recipient.getUserName() + ": $" + recipient.getBalance());
-            } else {
-                System.out.println("Insufficient balance for the transfer.");
-            }
-        } else {
-            System.out.println("Recipient InstaPay account not found.");
-        }
-    }
-
     public User login(String username, String password) {
         for (User user : users) {
             if (user.userName != null && user.password != null) {
@@ -140,10 +105,27 @@ public class InstaPayAccount {
                     System.out.println("Account Type: " + user.type);
                     return user;
                 }
+            } else {
+                System.out.println("Invalid user credentials");
             }
         }
+
         System.out.println("Wrong Email or Password");
         return null;
     }
-}
 
+    private TransferStrategy transferStrategy;
+
+    public void setTransferStrategy(TransferStrategy transferStrategy) {
+        this.transferStrategy = transferStrategy;
+    }
+
+    public void transfer(User sender, String recipient, float amount) {
+        if (transferStrategy != null) {
+            transferStrategy.transfer(sender, recipient, amount);
+        } else {
+            System.out.println("Transfer strategy not set.");
+        }
+    }
+
+}
