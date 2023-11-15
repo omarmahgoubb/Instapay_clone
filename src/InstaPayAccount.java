@@ -23,7 +23,7 @@ public class InstaPayAccount {
     }
 
 
-    public void addUser(String bankAccount, String phoneNumber, String type , float balance) {
+    public void addUser(String bankAccount, String phoneNumber, String type, float balance) {
         if ("bankAccount".equals(type)) {
             if (!userExists(bankAccount, phoneNumber)) {
                 System.out.println("Enter a distinct username: ");
@@ -31,7 +31,7 @@ public class InstaPayAccount {
                 if (!isUsernameTaken(userName)) {
                     System.out.println("Enter a complex password: ");
                     String password = scanner.nextLine();
-                    User user1 = new BankUser(userName, password, bankAccount, phoneNumber, type, balance) ;
+                    User user1 = new BankUser(userName, password, bankAccount, phoneNumber, type, balance);
                     users.add(user1);
                     System.out.println("User added successfully!");
                 } else {
@@ -140,13 +140,10 @@ public class InstaPayAccount {
                     System.out.println("Account Type: " + user.type);
                     return user;
                 }
-            } else {
-                System.out.println("Invalid user credentials");
             }
         }
-
         System.out.println("Wrong Email or Password");
         return null;
     }
-
 }
+

@@ -11,8 +11,9 @@ public class Main {
             System.out.println("enter 1 for sign up  / enter  2 for signing in / 3 for exit");
             command = scanner.nextInt();
             if (command == 1) {
+                user.Register();
 
-                if (user.Register()) {
+                /*if (user.Register()) {
                     scanner.nextLine();
                     System.out.println("sign in to your account");
                     System.out.println("enter your username ");
@@ -27,9 +28,9 @@ public class Main {
                     recivername = scanner.nextLine();
                     System.out.println("enter the amount ");
                     amount = scanner.nextFloat();
-                    instaPayAccount.transferToInstaPayAccount(user, recivername, amount);
-                }
-            } else if (command == 2) {
+                    instaPayAccount.transferToInstaPayAccount(user, recivername, amount);*/
+            }
+            else if (command == 2) {
                 System.out.println("enter your username ");
                 String username = scanner.nextLine();
                 System.out.println("enter your password ");
